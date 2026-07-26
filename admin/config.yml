@@ -1,0 +1,36 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "static/images"
+public_folder: "/images"
+
+collections:
+  - name: "seriler"
+    label: "Seriler"
+    folder: "content/seriler"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - {label: "Başlık", name: "title", widget: "string"}
+      - {label: "Alternatif Başlık", name: "alternatif", widget: "string", required: false}
+      - {label: "Yazar", name: "yazar", widget: "string", required: false}
+      - {label: "Artist/Çizer", name: "artist", widget: "string", required: false}
+      - {label: "Durum", name: "durum", widget: "select", options: ["Devam Ediyor", "Tamamlandı", "Hiatus"]}
+      - {label: "Güncelleme Sıklığı", name: "guncelleme", widget: "string", required: false}
+      - {label: "Türler", name: "turler", widget: "list", default: ["Action"]}
+      - {label: "Kapak Görseli", name: "kapak", widget: "image"}
+      - {label: "Özet", name: "ozet", widget: "text"}
+      - {label: "Öne Çıkan", name: "oneCikan", widget: "boolean", default: false}
+
+  - name: "bolumler"
+    label: "Bölümler"
+    folder: "content/bolumler"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - {label: "Bölüm Başlığı", name: "title", widget: "string"}
+      - {label: "Hangi Seri?", name: "seri", widget: "relation", collection: "seriler", search_fields: ["title"], value_field: "title", display_fields: ["title"]}
+      - {label: "Bölüm Numarası", name: "numara", widget: "number"}
+      - {label: "Yayın Tarihi", name: "date", widget: "datetime"}
+      - {label: "İçerik", name: "body", widget: "markdown"}
