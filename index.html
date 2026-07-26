@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NexusNovel - Braun's Novel</title>
+    <title>Braun's Novel</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Merriweather:wght@400;700;900&display=swap" rel="stylesheet">
@@ -15,21 +15,52 @@
             --color-dark-border: rgba(255, 255, 255, 0.08);
             --color-dark-text-primary: #f5f5f5;
             --color-dark-text-secondary: #b8b8c8;
-            --color-accent: #8b5cf6;
-            --color-accent-hover: #7c3aed;
-            --color-accent-light: rgba(139, 92, 246, 0.1);
+            --color-dark-text-muted: #8888a0;
+            --color-light-bg: #faf9f6;
+            --color-light-surface: #ffffff;
+            --color-light-card: #f5f3ef;
+            --color-light-border: rgba(0, 0, 0, 0.08);
+            --color-light-text-primary: #2d2d3a;
+            --color-light-text-secondary: #4a4a5a;
+            --color-light-text-muted: #6a6a7a;
+            --color-sepia-bg: #f4ecd8;
+            --color-sepia-surface: #eaddcf;
+            --color-sepia-card: #e0d5c7;
+            --color-sepia-text-primary: #433422;
+            --color-sepia-text-secondary: #5a4a3a;
+            --color-sepia-text-muted: #7a6b5a;
+            --color-accent: #c97547;
+            --color-accent-hover: #b5643a;
+            --color-accent-light: rgba(201, 117, 71, 0.15);
             --color-success: #10b981;
-            --color-hero-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --color-hero-gradient: linear-gradient(135deg, #c97547 0%, #8b4513 100%);
             --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             --font-serif: 'Merriweather', Georgia, serif;
+            --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
             --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.15);
+            --shadow-cover: 0 20px 40px -10px rgba(0, 0, 0, 0.4);
+            --radius-sm: 6px;
             --radius-md: 12px;
             --radius-lg: 16px;
             --radius-xl: 24px;
+            --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-normal: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+            --spacing-sm: 8px;
+            --spacing-md: 12px;
             --spacing-lg: 16px;
             --spacing-xl: 24px;
             --spacing-2xl: 32px;
             --spacing-3xl: 48px;
+        }
+        
+        html[data-theme="light"] {
+            --bg-primary: var(--color-light-bg);
+            --bg-surface: var(--color-light-surface);
+            --bg-card: var(--color-light-card);
+            --border-color: var(--color-light-border);
+            --text-primary: var(--color-light-text-primary);
+            --text-secondary: var(--color-light-text-secondary);
+            --text-muted: var(--color-light-text-muted);
         }
         
         html[data-theme="dark"] {
@@ -39,37 +70,111 @@
             --border-color: var(--color-dark-border);
             --text-primary: var(--color-dark-text-primary);
             --text-secondary: var(--color-dark-text-secondary);
+            --text-muted: var(--color-dark-text-muted);
         }
         
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html[data-theme="sepia"] {
+            --bg-primary: var(--color-sepia-bg);
+            --bg-surface: var(--color-sepia-surface);
+            --bg-card: var(--color-sepia-card);
+            --border-color: rgba(67, 52, 34, 0.15);
+            --text-primary: var(--color-sepia-text-primary);
+            --text-secondary: var(--color-sepia-text-secondary);
+            --text-muted: var(--color-sepia-text-muted);
+        }
         
+        html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: var(--font-sans);
             background-color: var(--bg-primary);
             color: var(--text-primary);
             line-height: 1.6;
+            transition: background-color var(--transition-normal), color var(--transition-normal);
         }
-        
+        a { color: var(--color-accent); text-decoration: none; transition: color var(--transition-fast); }
+        a:hover { color: var(--color-accent-hover); }
+        img { max-width: 100%; height: auto; display: block; }
         .container { max-width: 1280px; margin: 0 auto; padding: 0 var(--spacing-lg); }
+        @media (max-width: 768px) { .container { padding: 0 var(--spacing-md); } }
         
         /* Header */
         .site-header {
             position: sticky; top: 0; z-index: 1000;
             background-color: var(--bg-surface);
             border-bottom: 1px solid var(--border-color);
+            backdrop-filter: blur(10px);
             padding: var(--spacing-lg) 0;
         }
-        .header-inner { display: flex; align-items: center; justify-content: space-between; }
+        .header-inner { display: flex; align-items: center; justify-content: space-between; gap: var(--spacing-xl); }
         .logo {
-            display: flex; align-items: center; gap: 8px;
+            display: flex; align-items: center; gap: var(--spacing-sm);
             font-family: var(--font-serif); font-size: 1.25rem; font-weight: 900;
             color: var(--text-primary); text-decoration: none;
         }
         .logo-icon {
             display: flex; align-items: center; justify-content: center;
-            width: 32px; height: 32px; background: var(--color-accent);
+            width: 36px; height: 36px; background: var(--color-accent);
             border-radius: var(--radius-md); color: white; font-weight: 900;
+            font-family: var(--font-serif); font-size: 1.25rem;
         }
+        .main-nav { display: flex; gap: var(--spacing-2xl); list-style: none; }
+        .main-nav a { color: var(--text-secondary); font-weight: 500; }
+        .main-nav a:hover { color: var(--color-accent); }
+        .header-actions { display: flex; align-items: center; gap: var(--spacing-md); }
+        .icon-btn {
+            background: transparent; border: none; cursor: pointer;
+            width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;
+            border-radius: var(--radius-md); color: var(--text-secondary);
+            transition: all var(--transition-fast);
+        }
+        .icon-btn:hover { color: var(--color-accent); background-color: var(--bg-card); }
+        .mobile-menu-toggle { display: none; }
+        @media (max-width: 768px) {
+            .main-nav { display: none; }
+            .mobile-menu-toggle { display: flex; }
+        }
+        
+        /* Mobile Nav */
+        .mobile-nav-drawer {
+            position: fixed; top: 0; left: 0; bottom: 0; width: 280px;
+            background: var(--bg-surface); z-index: 3000;
+            transform: translateX(-100%); transition: transform 0.3s ease;
+            padding: 24px; display: flex; flex-direction: column;
+            border-right: 1px solid var(--border-color);
+        }
+        .mobile-nav-drawer.active { transform: translateX(0); }
+        .drawer-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
+        .mobile-nav-links { display: flex; flex-direction: column; gap: 4px; }
+        .mobile-nav-links a, .mobile-nav-links button {
+            font-size: 1rem; font-weight: 600; color: var(--text-primary);
+            padding: 12px 16px; border-radius: var(--radius-md);
+            background: none; border: none; text-align: left; cursor: pointer;
+            transition: background var(--transition-fast); display: flex; align-items: center; gap: 12px; width: 100%;
+        }
+        .mobile-nav-links a:hover, .mobile-nav-links button:hover { background: var(--bg-card); color: var(--color-accent); }
+        .drawer-backdrop {
+            position: fixed; inset: 0; background: rgba(0,0,0,0.6);
+            z-index: 2999; opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
+        }
+        .drawer-backdrop.active { opacity: 1; pointer-events: auto; }
+        
+        /* Search Modal */
+        .search-modal {
+            display: none; position: fixed; top: 72px; left: 50%; transform: translateX(-50%);
+            z-index: 2000; width: 90%; max-width: 500px;
+        }
+        .search-modal.active { display: block; }
+        .search-box {
+            background: var(--bg-surface); border-radius: var(--radius-lg);
+            padding: 12px; box-shadow: var(--shadow-lg); border: 1px solid var(--border-color);
+        }
+        .search-input-wrap {
+            display: flex; align-items: center; gap: var(--spacing-md);
+            padding: 10px 14px; background: var(--bg-card);
+            border-radius: var(--radius-md); border: 1px solid var(--border-color);
+        }
+        .search-input-wrap input { flex: 1; background: transparent; border: none; color: var(--text-primary); font-size: 0.9375rem; outline: none; }
         
         /* Main Content */
         .main-content { padding: var(--spacing-3xl) 0; min-height: calc(100vh - 200px); }
@@ -77,45 +182,11 @@
         .section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--spacing-2xl); }
         .section-title { font-family: var(--font-serif); font-size: 1.5rem; font-weight: 700; }
         
-        /* Hero Featured */
-        .hero-featured {
-            position: relative; border-radius: var(--radius-xl); overflow: hidden;
-            margin-bottom: var(--spacing-3xl); background: var(--color-hero-gradient);
-            min-height: 380px; display: grid; grid-template-columns: 280px 1fr;
-            gap: 48px; padding: 48px; align-items: center;
-        }
-        .hero-featured-badge {
-            display: inline-flex; padding: 6px 14px;
-            background: rgba(255, 255, 255, 0.2); backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.3); border-radius: 999px;
-            color: white; font-size: 0.75rem; font-weight: 700; text-transform: uppercase;
-            margin-bottom: 16px;
-        }
-        .hero-featured-cover {
-            position: relative; aspect-ratio: 3/4; border-radius: var(--radius-lg);
-            overflow: hidden; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-            background: rgba(0, 0, 0, 0.3);
-        }
-        .hero-featured-cover img { width: 100%; height: 100%; object-fit: cover; }
-        .hero-featured-info { position: relative; z-index: 1; color: white; }
-        .hero-featured-title {
-            font-family: var(--font-serif); font-size: 2rem; font-weight: 900;
-            line-height: 1.1; margin-bottom: 16px;
-        }
-        .hero-featured-desc { font-size: 1.0625rem; margin-bottom: 28px; opacity: 0.95; }
-        .btn-cta {
-            display: inline-flex; align-items: center; padding: 14px 28px;
-            border-radius: var(--radius-md); font-weight: 600; text-decoration: none;
-            transition: all 0.15s;
-        }
-        .btn-cta-primary { background: white; color: var(--color-accent); }
-        .btn-cta-primary:hover { background: #f0f0f0; }
-        
         /* Series Grid */
         .series-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: var(--spacing-xl); }
         .series-card {
             border-radius: var(--radius-lg); overflow: hidden; background: var(--bg-card);
-            border: 1px solid var(--border-color); transition: all 0.25s; text-decoration: none; color: inherit;
+            border: 1px solid var(--border-color); transition: all var(--transition-normal);
         }
         .series-card:hover { border-color: var(--color-accent); transform: translateY(-4px); box-shadow: var(--shadow-lg); }
         .series-cover { position: relative; width: 100%; padding-bottom: 140%; overflow: hidden; background: var(--bg-surface); }
@@ -124,29 +195,22 @@
         .series-title { font-family: var(--font-serif); font-size: 1rem; font-weight: 700; }
         
         /* Chapter List */
-        .chapter-list { list-style: none; display: flex; flex-direction: column; gap: 8px; max-width: 720px; }
+        .chapter-list { list-style: none; display: flex; flex-direction: column; gap: var(--spacing-sm); max-width: 720px; }
         .chapter-list-item {
-            display: flex; align-items: center; gap: 12px; padding: 14px 18px;
-            background: var(--bg-card); border: 1px solid var(--border-color);
-            border-radius: var(--radius-md); text-decoration: none; color: var(--text-primary);
-            transition: all 0.15s;
+            display: flex; align-items: center; gap: var(--spacing-md);
+            padding: 14px 18px; background: var(--bg-card);
+            border: 1px solid var(--border-color); border-radius: var(--radius-md);
+            transition: all var(--transition-fast); text-decoration: none; color: var(--text-primary);
         }
         .chapter-list-item:hover { border-color: var(--color-accent); background: var(--color-accent-light); }
         .chapter-list-title { font-size: 0.875rem; font-weight: 600; flex: 1; }
         .chapter-list-series { font-size: 0.75rem; color: var(--color-accent); font-weight: 500; }
-        .chapter-list-date { font-size: 0.75rem; color: var(--text-secondary); }
+        .chapter-list-date { font-size: 0.75rem; color: var(--text-muted); }
         
         /* Footer */
         .site-footer {
             background: var(--bg-surface); border-top: 1px solid var(--border-color);
-            padding: var(--spacing-3xl) 0; text-align: center; color: var(--text-secondary);
-        }
-
-        @media (max-width: 768px) {
-            .hero-featured { grid-template-columns: 1fr; padding: 24px; gap: 24px; }
-            .hero-featured-cover { max-width: 180px; margin: 0 auto; }
-            .hero-featured-title { font-size: 1.5rem; }
-            .series-grid { grid-template-columns: repeat(2, 1fr); }
+            padding: var(--spacing-3xl) 0; text-align: center; color: var(--text-muted);
         }
     </style>
 </head>
@@ -156,85 +220,135 @@
         <div class="container">
             <div class="header-inner">
                 <a href="/" class="logo">
-                    <span class="logo-icon">N</span>
-                    <span>NexusNovel</span>
+                    <span class="logo-icon">B</span>
+                    <span>Braun's Novel</span>
                 </a>
+                <nav class="main-nav">
+                    <a href="/search/label/Seri">Seriler</a>
+                    <a href="/search/label/Bolum">Bölümler</a>
+                </nav>
+                <div class="header-actions">
+                    <button class="icon-btn" id="searchToggle" aria-label="Ara">
+                        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+                    </button>
+                    <button class="icon-btn" id="themeToggle" aria-label="Tema">
+                        <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line stroke="currentColor" x1="12" y1="1" x2="12" y2="3"/><line stroke="currentColor" x1="12" y1="21" x2="12" y2="23"/></svg>
+                    </button>
+                    <button class="icon-btn mobile-menu-toggle" id="mobileMenuToggle" aria-label="Menü">
+                        <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+                    </button>
+                </div>
             </div>
         </div>
     </header>
 
+    <div class="drawer-backdrop" id="drawerBackdrop"></div>
+    <div class="mobile-nav-drawer" id="mobileNavDrawer">
+        <div class="drawer-header">
+            <strong>Menü</strong>
+            <button class="icon-btn" id="mobileMenuClose">×</button>
+        </div>
+        <nav class="mobile-nav-links">
+            <a href="/search/label/Seri">Seriler</a>
+            <a href="/search/label/Bolum">Bölümler</a>
+            <button id="mobileSearchBtn">Ara</button>
+            <button id="mobileThemeBtn">Tema Değiştir</button>
+        </nav>
+    </div>
+
+    <div class="search-modal" id="searchModal">
+        <div class="search-box">
+            <form action="/search" method="get">
+                <div class="search-input-wrap">
+                    <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+                    <input type="search" name="q" placeholder="Ara..." autofocus>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <main class="main-content">
         <div class="container">
-            
-            <!-- Öne Çıkan Seri (Placeholder) -->
-            <section class="hero-featured">
-                <div class="hero-featured-cover">
-                    <img src="https://via.placeholder.com/300x400/8b5cf6/ffffff?text=Kapak" alt="Öne Çıkan">
-                </div>
-                <div class="hero-featured-info">
-                    <div class="hero-featured-badge">⭐ Öne Çıkan</div>
-                    <h2 class="hero-featured-title">Solo Leveling</h2>
-                    <p class="hero-featured-desc">Dünyanın en zayıf avcısının en güçlüye dönüşmesinin destansı hikayesi.</p>
-                    <a href="#" class="btn-cta btn-cta-primary">Okumaya Başla</a>
-                </div>
-            </section>
-
-            <!-- Yeni Bölümler -->
             <section class="section">
                 <div class="section-header">
-                    <h2 class="section-title">Yeni Bölümler</h2>
+                    <h2 class="section-title">Son Bölümler</h2>
                 </div>
-                <ul class="chapter-list">
-                    <li>
-                        <a href="#" class="chapter-list-item">
-                            <span class="chapter-list-title">Bölüm 1: Başlangıç</span>
-                            <span class="chapter-list-series">Solo Leveling</span>
-                            <span class="chapter-list-date">27 Tem</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" class="chapter-list-item">
-                            <span class="chapter-list-title">Bölüm 2: İlk Görev</span>
-                            <span class="chapter-list-series">Solo Leveling</span>
-                            <span class="chapter-list-date">26 Tem</span>
-                        </a>
+                <ul class="chapter-list" id="latest-chapters">
+                    <li class="chapter-list-item">
+                        <div class="chapter-list-title">Örnek Bölüm 1</div>
+                        <div class="chapter-list-series">Örnek Seri</div>
+                        <div class="chapter-list-date">Bugün</div>
                     </li>
                 </ul>
             </section>
 
-            <!-- Seriler -->
             <section class="section">
                 <div class="section-header">
                     <h2 class="section-title">Seriler</h2>
+                    <a href="/search/label/Seri" style="color:var(--text-muted);font-size:0.875rem;">Tümünü Gör →</a>
                 </div>
-                <div class="series-grid">
-                    <a href="#" class="series-card">
-                        <div class="series-cover">
-                            <img src="https://via.placeholder.com/200x280/1a1a2e/8b5cf6?text=Seri+1" alt="Seri 1">
-                        </div>
-                        <div class="series-info">
-                            <h3 class="series-title">The Beginning After The End</h3>
-                        </div>
-                    </a>
-                    <a href="#" class="series-card">
-                        <div class="series-cover">
-                            <img src="https://via.placeholder.com/200x280/1a1a2e/8b5cf6?text=Seri+2" alt="Seri 2">
-                        </div>
-                        <div class="series-info">
-                            <h3 class="series-title">Omniscient Reader</h3>
-                        </div>
-                    </a>
+                <div class="series-grid" id="series-grid">
+                    <article class="series-card">
+                        <a href="#">
+                            <div class="series-cover">
+                                <img src="https://via.placeholder.com/200x280/1a1a2e/c97547?text=Örnek" alt="Örnek Seri">
+                            </div>
+                            <div class="series-info">
+                                <h3 class="series-title">Örnek Seri</h3>
+                            </div>
+                        </a>
+                    </article>
                 </div>
             </section>
-
         </div>
     </main>
 
     <footer class="site-footer">
         <div class="container">
-            <div>© 2026 <strong>NexusNovel</strong>. Tüm hakları saklıdır.</div>
+            <div>© 2026 <strong>Braun's Novel</strong>. Tüm hakları saklıdır.</div>
         </div>
     </footer>
 
+    <script>
+        // Theme Toggle
+        var themeToggle = document.getElementById('themeToggle');
+        var mobileThemeBtn = document.getElementById('mobileThemeBtn');
+        var themes = ['dark', 'light', 'sepia'];
+        var currentTheme = localStorage.getItem('brauns-theme') || 'dark';
+        document.documentElement.setAttribute('data-theme', currentTheme);
+        
+        function cycleTheme() {
+            var idx = themes.indexOf(currentTheme);
+            currentTheme = themes[(idx + 1) % themes.length];
+            document.documentElement.setAttribute('data-theme', currentTheme);
+            localStorage.setItem('brauns-theme', currentTheme);
+        }
+        
+        if (themeToggle) themeToggle.addEventListener('click', cycleTheme);
+        if (mobileThemeBtn) mobileThemeBtn.addEventListener('click', function() { cycleTheme(); closeMobileMenu(); });
+        
+        // Mobile Menu
+        var mobileMenuToggle = document.getElementById('mobileMenuToggle');
+        var mobileNavDrawer = document.getElementById('mobileNavDrawer');
+        var drawerBackdrop = document.getElementById('drawerBackdrop');
+        var mobileMenuClose = document.getElementById('mobileMenuClose');
+        
+        function openMobileMenu() { mobileNavDrawer.classList.add('active'); drawerBackdrop.classList.add('active'); }
+        function closeMobileMenu() { mobileNavDrawer.classList.remove('active'); drawerBackdrop.classList.remove('active'); }
+        
+        if (mobileMenuToggle) mobileMenuToggle.addEventListener('click', openMobileMenu);
+        if (mobileMenuClose) mobileMenuClose.addEventListener('click', closeMobileMenu);
+        if (drawerBackdrop) drawerBackdrop.addEventListener('click', closeMobileMenu);
+        
+        // Search Modal
+        var searchModal = document.getElementById('searchModal');
+        var searchToggle = document.getElementById('searchToggle');
+        var mobileSearchBtn = document.getElementById('mobileSearchBtn');
+        
+        if (searchToggle) searchToggle.addEventListener('click', function() { searchModal.classList.add('active'); });
+        if (mobileSearchBtn) mobileSearchBtn.addEventListener('click', function() { closeMobileMenu(); searchModal.classList.add('active'); });
+        if (searchModal) searchModal.addEventListener('click', function(e) { if (e.target === searchModal) searchModal.classList.remove('active'); });
+        document.addEventListener('keydown', function(e) { if (e.key === 'Escape') searchModal.classList.remove('active'); });
+    </script>
 </body>
 </html>
