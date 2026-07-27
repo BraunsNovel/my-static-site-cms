@@ -1,36 +1,65 @@
 backend:
   name: git-gateway
   branch: main
+  squash_merges: true
 
-media_folder: "static/images"
-public_folder: "/images"
+media_folder: "src/images/uploads"
+public_folder: "/images/uploads"
+
+publish_mode: editorial_workflow
+
+slug:
+  encoding: ascii
+  clean_accents: true
+  sanitize_replacement: "-"
 
 collections:
-  - name: "seriler"
-    label: "Seriler"
-    folder: "content/seriler"
+  # ============ SERİLER ============
+  - name: "series"
+    label: "📚 Seriler"
+    label_singular: "Seri"
+    folder: "content/series"
     create: true
     slug: "{{slug}}"
+    identifier_field: "title"
+    summary: "{{title}} — {{status}}"
+    sortable_fields: ["title", "status", "publishDate"]
     fields:
-      - {label: "Başlık", name: "title", widget: "string"}
-      - {label: "Alternatif Başlık", name: "alternatif", widget: "string", required: false}
-      - {label: "Yazar", name: "yazar", widget: "string", required: false}
-      - {label: "Artist/Çizer", name: "artist", widget: "string", required: false}
-      - {label: "Durum", name: "durum", widget: "select", options: ["Devam Ediyor", "Tamamlandı", "Hiatus"]}
-      - {label: "Güncelleme Sıklığı", name: "guncelleme", widget: "string", required: false}
-      - {label: "Türler", name: "turler", widget: "list", default: ["Action"]}
-      - {label: "Kapak Görseli", name: "kapak", widget: "image"}
-      - {label: "Özet", name: "ozet", widget: "text"}
-      - {label: "Öne Çıkan", name: "oneCikan", widget: "boolean", default: false}
+      - { label: "Başlık", name: "title", widget: "string", required: true }
+      - { label: "Alternatif Başlık", name: "altTitle", widget: "string", required: false, hint: "Orijinal dildeki başlık (örn: Na Honjaman Level Up)" }
+      - { label: "Yazar", name: "author", widget: "string", required: true, default: "Bilinmiyor" }
+      - { label: "Çizer (Artist)", name: "artist", widget: "string", required: false }
+      - { label: "Durum", name: "status", widget: "select", options: ["ongoing", "completed", "hiatus", "dropped"], default: "ongoing" }
+      - { label: "Güncelleme Sıklığı", name: "updateSchedule", widget: "string", default: "Her gün", hint: "Örn: 'Pazartesi - Çarşamba - Cuma' veya 'Tamamlandı'" }
+      - { label: "Kapak Görseli", name: "cover", widget: "image", required: true, choose_url: false }
+      - { label: "Türler", name: "genres", widget: "list", default: ["Action", "Fantasy"] }
+      - { label: "Öne Çıkan", name: "featured", widget: "boolean", default: false, hint: "Ana sayfada hero bölümünde gösterilir" }
+      - { label: "Özet", name: "synopsis", widget: "markdown", required: true }
+      - { label: "Yayın Tarihi", name: "publishDate", widget: "datetime", date_format: "YYYY-MM-DD", time_format: false, format: "YYYY-MM-DD" }
 
-  - name: "bolumler"
-    label: "Bölümler"
-    folder: "content/bolumler"
+  # ============ BÖLÜMLER ============
+  - name: "chapters"
+    label: "📖 Bölümler"
+    label_singular: "Bölüm"
+    folder: "content/chapters"
+    create: true
+    slug: "{{series}}-{{chapterNumber | pad(3)}}"
+    identifier_field: "title"
+    summary: "{{series}} — Bölüm {{chapterNumber}}: {{title}}"
+    sortable_fields: ["series", "chapterNumber", "publishedAt"]
+    fields:
+      - { label: "Seri", name: "series", widget: "relation", collection: "series", value_field: "slug", search_fields: ["title"], display_fields: ["title"], required: true }
+      - { label: "Bölüm Başlığı", name: "title", widget: "string", required: true, hint: "Örn: 'Zindan' veya 'Uyanış'" }
+      - { label: "Bölüm Numarası", name: "chapterNumber", widget: "number", value_type: "int", min: 1, required: true }
+      - { label: "Yayın Tarihi", name: "publishedAt", widget: "datetime", date_format: "YYYY-MM-DD", time_format: false, format: "YYYY-MM-DD" }
+      - { label: "İçerik", name: "body", widget: "markdown", required: true, hint: "Bölüm metnini buraya yazın. Markdown destekler: **kalın**, *italik*, > alıntı, — liste" }
+
+  # ============ SAYFALAR (Opsiyonel: Hakkında, İletişim) ============
+  - name: "pages"
+    label: "📄 Sayfalar"
+    folder: "content/pages"
     create: true
     slug: "{{slug}}"
     fields:
-      - {label: "Bölüm Başlığı", name: "title", widget: "string"}
-      - {label: "Hangi Seri?", name: "seri", widget: "relation", collection: "seriler", search_fields: ["title"], value_field: "title", display_fields: ["title"]}
-      - {label: "Bölüm Numarası", name: "numara", widget: "number"}
-      - {label: "Yayın Tarihi", name: "date", widget: "datetime"}
-      - {label: "İçerik", name: "body", widget: "markdown"}
+      - { label: "Başlık", name: "title", widget: "string" }
+      - { label: "İçerik", name: "body", widget: "markdown" }
